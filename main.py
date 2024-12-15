@@ -26,7 +26,8 @@ def get_db():
 async def create_user(user: UserCreate, db: Session = Depends(get_db)):
     db_user = User(name=user.name)
     db.add(db_user)
-    db.commit()
+    await  db.flush()
+    await  db.commit()
     db.refresh(db_user)
     return db_user.id
 
@@ -34,7 +35,8 @@ async def create_user(user: UserCreate, db: Session = Depends(get_db)):
 async def create_product(product: ProductCreate, db: Session = Depends(get_db)):
     db_product = Product(name=product.name)
     db.add(db_product)
-    db.commit()
+    await  db.flush()
+    await  db.commit()
     db.refresh(db_product)
     return db_product.id
 
@@ -43,7 +45,8 @@ async def create_product(product: ProductCreate, db: Session = Depends(get_db)):
 async def create_purchase(purchase: PurchaseCreate, db: Session = Depends(get_db)):
     db_purchase = Purchase(user_id=purchase.user_id, product_id=purchase.product_id)
     db.add(db_purchase)
-    db.commit()
+    await  db.flush()
+    await  db.commit()
     return {"message": "Purchase created"}
 
 
